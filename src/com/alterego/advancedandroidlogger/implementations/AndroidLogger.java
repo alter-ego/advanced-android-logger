@@ -4,10 +4,17 @@ import android.util.Log;
 
 import com.alterego.advancedandroidlogger.interfaces.ILogger;
 
+/**
+ * This is the wrapper around the basic Android {@link Log} logger. It has logging methods in two flavours, with tag and without 
+ * (default tag is "ADVANCEDANDROIDLOGGER") - the tag may also be set via constructor, but can also be overridden.
+ * {@link setLoggingLevel} method sets the logging level, below which log calls will not
+ * be logged (e.g. if you set logging level to NORMAL, all the ILogger calls to verbose and debug methods will
+ * not result in printed logs); default logging level is NORMAL i.e. INFO.
+ */
 public class AndroidLogger implements ILogger {
 
 	private int mLoggingLevel = 2;
-	private String mLoggingTag = "LOGGER";
+	private String mLoggingTag = "ADVANCEDANDROIDLOGGER";
 
 	/**
 	 * Initializes the AndroidLogger with the default tag "LOGGER" and the 
@@ -35,11 +42,11 @@ public class AndroidLogger implements ILogger {
 	 * level.
 	 *
 	 * @param tag   Logging tag
-	 * @param level Logging level {@link ILogger}
+	 * @param level Logging level {@link ILogger.LoggingLevel}
 	 */
 
 	public AndroidLogger(String tag, LoggingLevel level) {
-		if (!tag.equals(null))
+		if (tag!=null)
 			mLoggingTag = tag;
 		setLoggingLevel(level);
 	}
@@ -106,8 +113,13 @@ public class AndroidLogger implements ILogger {
 	@Override
 	public void fail(String content) {
 		fail(mLoggingTag, content);
-	}
+	}	
 
+	@Override
+	public ILogger getLogger(Object instance) {
+		return this;
+	}
+	
 	@Override
 	public void setLoggingLevel(LoggingLevel level) {
 
@@ -121,18 +133,20 @@ public class AndroidLogger implements ILogger {
 			mLoggingLevel  = 3;
 
 	}
-
-	@Override
-	public ILogger getLogger(Object instance) {
-		return this;
-	}
 	
-	protected void setLoggingLevel (int level) {
+	@Override
+	public void setLoggingLevel (int level) {
 		mLoggingLevel = level;
 	}
 	
-	protected int getLoggingLevel() {
+	@Override
+	public int getLoggingLevel() {
 		return mLoggingLevel;
+	}
+
+	@Override
+	public String getLoggingTag(Object instance) {
+		return mLoggingTag;
 	}
 
 }
