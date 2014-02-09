@@ -70,4 +70,18 @@ public class NullAndroidLogger implements ILogger {
 		return this;
 	}
 
+	@Override
+	public void setLoggingLevel(int level) {
+	}
+
+	@Override
+	public int getLoggingLevel() {
+		return 0;
+	}
+
+	@Override
+	public String getLoggingTag(Object instance) {
+		return "";
+	}
+
 }
