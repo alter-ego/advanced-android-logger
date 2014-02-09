@@ -2,6 +2,12 @@ package com.alterego.advancedandroidlogger.implementations;
 
 import com.alterego.advancedandroidlogger.interfaces.ILogger;
 
+/**
+ * This is the wrapper around {@link AndroidLogger} Android logger that adds additional class, method and line info 
+ * to the logging text. It is in the following format:
+ * className.methodName() @ line lineNr ": " + normal logger content;
+ */
+
 public class DetailedAndroidLogger implements ILogger {
 
 	private ILogger mLogger;
@@ -39,15 +45,15 @@ public class DetailedAndroidLogger implements ILogger {
 		mLogger = new AndroidLogger (tag, level);
 	}
 
-	private String getDetails () {
+	private String getDetails (String content) {
 		String details = "";
 
 		try {
-			String fullClassName = Thread.currentThread().getStackTrace()[3].getClassName();
+			String fullClassName = Thread.currentThread().getStackTrace()[4].getClassName();
 			String className = fullClassName.substring(fullClassName.lastIndexOf(".") + 1);
-			String methodName = Thread.currentThread().getStackTrace()[3].getMethodName();
-			int lineNumber = Thread.currentThread().getStackTrace()[3].getLineNumber();
-			details = className + "." + methodName + "() @ line " + lineNumber + ": ";
+			String methodName = Thread.currentThread().getStackTrace()[4].getMethodName();
+			int lineNumber = Thread.currentThread().getStackTrace()[4].getLineNumber();
+			details = className + "." + methodName + "() @ line " + lineNumber + ": " + content;
 		} catch (Exception e) {
 			mLogger.warning("LOGGER", "DetailedAndroidLogger.getDetails() couldn't get details because of " + e.getMessage());
 			e.printStackTrace();
@@ -59,62 +65,62 @@ public class DetailedAndroidLogger implements ILogger {
 
 	@Override
 	public void verbose(String tag, String content) {
-		mLogger.verbose(tag, getDetails() + content);
+		mLogger.verbose(tag, getDetails(content));
 	}
 
 	@Override
 	public void verbose(String content) {
-		mLogger.verbose(getDetails() + content);
+		mLogger.verbose(getDetails(content));
 	}
 
 	@Override
 	public void debug(String tag, String content) {
-		mLogger.debug(tag, getDetails() + content);
+		mLogger.debug(tag, getDetails(content));
 	}
 
 	@Override
 	public void debug(String content) {
-		mLogger.debug(getDetails() + content);
+		mLogger.debug(getDetails(content));
 	}
 
 	@Override
 	public void info(String tag, String content) {
-		mLogger.info(tag, getDetails() + content);
+		mLogger.info(tag, getDetails(content));
 	}
 
 	@Override
 	public void info(String content) {
-		mLogger.info(getDetails() + content);
+		mLogger.info(getDetails(content));
 	}
 
 	@Override
 	public void warning(String tag, String content) {
-		mLogger.warning(tag, getDetails() + content);
+		mLogger.warning(tag, getDetails(content));
 	}
 
 	@Override
 	public void warning(String content) {
-		mLogger.warning(getDetails() + content);
+		mLogger.warning(getDetails(content));
 	}
 
 	@Override
 	public void error(String tag, String content) {
-		mLogger.error(tag, getDetails() + content);
+		mLogger.error(tag, getDetails(content));
 	}
 
 	@Override
 	public void error(String content) {
-		mLogger.error(getDetails() + content);
+		mLogger.error(getDetails(content));
 	}
 
 	@Override
 	public void fail(String tag, String content) {
-		mLogger.fail(tag, getDetails() + content);
+		mLogger.fail(tag, getDetails(content));
 	}
 
 	@Override
 	public void fail(String content) {
-		mLogger.fail(getDetails() + content);
+		mLogger.fail(getDetails(content));
 	}
 
 	@Override
@@ -125,6 +131,22 @@ public class DetailedAndroidLogger implements ILogger {
 	@Override
 	public ILogger getLogger(Object instance) {
 		return this;
+	}
+
+	@Override
+	public String getLoggingTag(Object instance) {
+		return mLogger.getLoggingTag(instance);
+	}
+
+	@Override
+	public void setLoggingLevel(int level) {
+		mLogger.setLoggingLevel(level);
+		
+	}
+
+	@Override
+	public int getLoggingLevel() {
+		return mLogger.getLoggingLevel();
 	}
 
 }
