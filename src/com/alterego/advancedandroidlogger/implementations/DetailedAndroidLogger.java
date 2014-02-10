@@ -1,6 +1,6 @@
 package com.alterego.advancedandroidlogger.implementations;
 
-import com.alterego.advancedandroidlogger.interfaces.ILogger;
+import com.alterego.advancedandroidlogger.interfaces.IAndroidLogger;
 
 /**
  * This is the wrapper around {@link AndroidLogger} Android logger that adds additional class, method and line info 
@@ -8,9 +8,9 @@ import com.alterego.advancedandroidlogger.interfaces.ILogger;
  * className.methodName() @ line lineNr ": " + normal logger content;
  */
 
-public class DetailedAndroidLogger implements ILogger {
+public class DetailedAndroidLogger implements IAndroidLogger {
 
-	private ILogger mLogger;
+	private IAndroidLogger mLogger;
 
 	/**
 	 * Initializes the DetailedAndroidLogger with the default tag "LOGGER" and the 
@@ -38,7 +38,7 @@ public class DetailedAndroidLogger implements ILogger {
 	 * level.
 	 *
 	 * @param tag   Logging tag
-	 * @param level Logging level {@link ILogger}
+	 * @param level Logging level {@link IAndroidLogger}
 	 */
 
 	public DetailedAndroidLogger(String tag, LoggingLevel level) {
@@ -129,7 +129,7 @@ public class DetailedAndroidLogger implements ILogger {
 	}
 
 	@Override
-	public ILogger getLogger(Object instance) {
+	public IAndroidLogger getLogger(Object instance) {
 		return this;
 	}
 

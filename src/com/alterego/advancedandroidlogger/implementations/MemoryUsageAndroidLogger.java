@@ -1,12 +1,12 @@
 
 package com.alterego.advancedandroidlogger.implementations;
 
-import com.alterego.advancedandroidlogger.interfaces.ILogger;
+import com.alterego.advancedandroidlogger.interfaces.IAndroidLogger;
 
 import android.os.Debug;
 
 /**
- * This is the wrapper around the {@link ILogger} interface - you can pass it {@link AndroidLogger} or {@link DetailedAndroidLogger}. 
+ * This is the wrapper around the {@link IAndroidLogger} interface - you can pass it {@link AndroidLogger} or {@link DetailedAndroidLogger}. 
  * It adds memory info in configurable units. It is in the following format:
  * Current memory stats RAM used = (totalMemory - freeMemory)/maxMemory; HEAP used = heapAllocatedMemory FOR ... (regular logging text)
 
@@ -15,22 +15,22 @@ import android.os.Debug;
 	maxMemory = Runtime.getRuntime().maxMemory()
 	heapAllocatedMemory = Debug.getNativeHeapAllocatedSize()
  */
-public class MemoryUsageAndroidLogger implements ILogger {
+public class MemoryUsageAndroidLogger implements IAndroidLogger {
 
 	public static enum MemoryUnit {
 		Bytes, Kilobytes, Megabytes
 	}
-	private ILogger mLogger;
+	private IAndroidLogger mLogger;
 	private MemoryUnit mUnit;
 
 	
 	/**
-	 * Initializes the MemoryUsageLogger with the {@link ILogger} base and a {@link MemoryUnit} which takes following values:
+	 * Initializes the MemoryUsageLogger with the {@link IAndroidLogger} base and a {@link MemoryUnit} which takes following values:
 	 *
-	 * @param logger {@link ILogger} reference
+	 * @param logger {@link IAndroidLogger} reference
 	 * @param unit {@link MemoryUnit} takes following values = Bytes, Kilobytes, Megabytes
 	 */
-	public MemoryUsageAndroidLogger(ILogger logger, MemoryUnit unit) {
+	public MemoryUsageAndroidLogger(IAndroidLogger logger, MemoryUnit unit) {
 		mLogger = logger;
 		mUnit = unit;
 	}
@@ -91,7 +91,7 @@ public class MemoryUsageAndroidLogger implements ILogger {
 	}
 
 	@Override
-	public ILogger getLogger(Object instance) {
+	public IAndroidLogger getLogger(Object instance) {
 		return this;
 	}
 

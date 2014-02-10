@@ -2,7 +2,7 @@ package com.alterego.advancedandroidlogger.implementations;
 
 import android.util.Log;
 
-import com.alterego.advancedandroidlogger.interfaces.ILogger;
+import com.alterego.advancedandroidlogger.interfaces.IAndroidLogger;
 
 /**
  * This is the wrapper around the basic Android {@link Log} logger. It has logging methods in two flavours, with tag and without 
@@ -11,7 +11,7 @@ import com.alterego.advancedandroidlogger.interfaces.ILogger;
  * be logged (e.g. if you set logging level to NORMAL, all the ILogger calls to verbose and debug methods will
  * not result in printed logs); default logging level is NORMAL i.e. INFO.
  */
-public class AndroidLogger implements ILogger {
+public class AndroidLogger implements IAndroidLogger {
 
 	private int mLoggingLevel = 2;
 	private String mLoggingTag = "ADVANCEDANDROIDLOGGER";
@@ -42,7 +42,7 @@ public class AndroidLogger implements ILogger {
 	 * level.
 	 *
 	 * @param tag   Logging tag
-	 * @param level Logging level {@link ILogger.LoggingLevel}
+	 * @param level Logging level {@link IAndroidLogger.LoggingLevel}
 	 */
 
 	public AndroidLogger(String tag, LoggingLevel level) {
@@ -116,7 +116,7 @@ public class AndroidLogger implements ILogger {
 	}	
 
 	@Override
-	public ILogger getLogger(Object instance) {
+	public IAndroidLogger getLogger(Object instance) {
 		return this;
 	}
 	
