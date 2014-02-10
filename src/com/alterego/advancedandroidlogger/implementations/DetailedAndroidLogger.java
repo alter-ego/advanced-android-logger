@@ -1,5 +1,8 @@
 package com.alterego.advancedandroidlogger.implementations;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import com.alterego.advancedandroidlogger.interfaces.IAndroidLogger;
 
 /**
@@ -11,6 +14,13 @@ import com.alterego.advancedandroidlogger.interfaces.IAndroidLogger;
 public class DetailedAndroidLogger implements IAndroidLogger {
 
 	private IAndroidLogger mLogger;
+	private int mStackTraceLevel;
+
+	private static final ArrayList<String> COMMON_STACKTRACE_CLASSNAMES = new ArrayList<String> 
+		(Arrays.asList("dalvik.system.VMStack", 
+				"java.lang.Thread", 
+				"com.alterego.advancedandroidlogger.implementations.DetailedAndroidLogger", 
+				"com.alterego.advancedandroidlogger.implementations.DetailedAndroidLogger"));
 
 	/**
 	 * Initializes the DetailedAndroidLogger with the default tag "LOGGER" and the 
@@ -43,16 +53,37 @@ public class DetailedAndroidLogger implements IAndroidLogger {
 
 	public DetailedAndroidLogger(String tag, LoggingLevel level) {
 		mLogger = new AndroidLogger (tag, level);
+		mStackTraceLevel = findStackTraceLevel ();
 	}
+
+	private int findStackTraceLevel () {
+
+		int level_index = 0;
+		String fullClassName = "";
+
+		for (level_index = 0; level_index<Thread.currentThread().getStackTrace().length; level_index++) {
+			fullClassName = Thread.currentThread().getStackTrace()[level_index].getClassName();
+			if (!COMMON_STACKTRACE_CLASSNAMES.contains(fullClassName))
+				break;
+		}
+
+		return level_index;
+
+	}
+
 
 	private String getDetails (String content) {
 		String details = "";
 
 		try {
-			String fullClassName = Thread.currentThread().getStackTrace()[4].getClassName();
+			
+			if (COMMON_STACKTRACE_CLASSNAMES.contains(Thread.currentThread().getStackTrace()[mStackTraceLevel].getClassName()))
+				mStackTraceLevel = findStackTraceLevel ();
+			
+			String fullClassName = Thread.currentThread().getStackTrace()[mStackTraceLevel].getClassName();
 			String className = fullClassName.substring(fullClassName.lastIndexOf(".") + 1);
-			String methodName = Thread.currentThread().getStackTrace()[4].getMethodName();
-			int lineNumber = Thread.currentThread().getStackTrace()[4].getLineNumber();
+			String methodName = Thread.currentThread().getStackTrace()[mStackTraceLevel].getMethodName();
+			int lineNumber = Thread.currentThread().getStackTrace()[mStackTraceLevel].getLineNumber();
 			details = className + "." + methodName + "() @ line " + lineNumber + ": " + content;
 		} catch (Exception e) {
 			mLogger.warning("LOGGER", "DetailedAndroidLogger.getDetails() couldn't get details because of " + e.getMessage());
@@ -141,7 +172,7 @@ public class DetailedAndroidLogger implements IAndroidLogger {
 	@Override
 	public void setLoggingLevel(int level) {
 		mLogger.setLoggingLevel(level);
-		
+
 	}
 
 	@Override
