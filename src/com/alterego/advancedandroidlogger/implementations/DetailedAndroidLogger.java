@@ -20,7 +20,7 @@ public class DetailedAndroidLogger implements IAndroidLogger {
 		(Arrays.asList("dalvik.system.VMStack", 
 				"java.lang.Thread", 
 				"com.alterego.advancedandroidlogger.implementations.DetailedAndroidLogger", 
-				"com.alterego.advancedandroidlogger.implementations.DetailedAndroidLogger"));
+				"com.alterego.advancedandroidlogger.implementations.MultiLoggerWrapper"));
 
 	/**
 	 * Initializes the DetailedAndroidLogger with the default tag "LOGGER" and the 
