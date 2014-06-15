@@ -21,3 +21,10 @@ project.properties
 .classpath
 .project
 .settings
+
+# Idea files
+.idea
+.gradle
+*.iml
+gradle*
+app/build/*
