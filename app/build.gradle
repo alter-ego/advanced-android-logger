@@ -40,4 +40,3 @@ task makeJar(type: Copy) {
 }
 
 makeJar.dependsOn(clearJar, build)
-
