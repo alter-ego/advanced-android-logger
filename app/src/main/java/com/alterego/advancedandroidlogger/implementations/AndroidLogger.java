@@ -24,7 +24,7 @@ import com.alterego.advancedandroidlogger.interfaces.IAndroidLogger;
 /**
  * This is the wrapper around the basic Android {@link Log} logger. It has logging methods in two flavours, with tag and without 
  * (default tag is "ADVANCEDANDROIDLOGGER") - the tag may also be set via constructor, but can also be overridden.
- * {@link setLoggingLevel} method sets the logging level, below which log calls will not
+ * {@link setLoggingLevel()} method sets the logging level, below which log calls will not
  * be logged (e.g. if you set logging level to NORMAL, all the ILogger calls to verbose and debug methods will
  * not result in printed logs); default logging level is NORMAL i.e. INFO.
  */
@@ -36,8 +36,6 @@ public class AndroidLogger implements IAndroidLogger {
 	/**
 	 * Initializes the AndroidLogger with the default tag "LOGGER" and the 
 	 * default debugging level NORMAL (Log.i).
-	 *
-	 * @param tag Logging tag
 	 */
 	public AndroidLogger() {
 		this(null, LoggingLevel.NORMAL);
@@ -71,7 +69,7 @@ public class AndroidLogger implements IAndroidLogger {
 
 	@Override
 	public void verbose(String tag, String content) {
-		if (mLoggingLevel == 0)
+		if (mLoggingLevel == 0 && content!=null)
 			Log.v(tag, content);
 	}
 
@@ -82,7 +80,7 @@ public class AndroidLogger implements IAndroidLogger {
 
 	@Override
 	public void debug(String tag, String content) {
-		if (mLoggingLevel <= 1)
+		if (mLoggingLevel <= 1 && content!=null)
 			Log.d(tag, content);
 	}
 
@@ -93,7 +91,7 @@ public class AndroidLogger implements IAndroidLogger {
 
 	@Override
 	public void info(String tag, String content) {
-		if (mLoggingLevel <= 2)
+		if (mLoggingLevel <= 2 && content!=null)
 			Log.i(tag, content);
 	}
 
@@ -104,7 +102,9 @@ public class AndroidLogger implements IAndroidLogger {
 
 	@Override
 	public void warning(String tag, String content) {
-		Log.w(tag, content);
+        if (content != null) {
+            Log.w(tag, content);
+        }
 	}
 
 	@Override
@@ -114,7 +114,9 @@ public class AndroidLogger implements IAndroidLogger {
 
 	@Override
 	public void error(String tag, String content) {
-		Log.e(tag, content);
+        if (content != null) {
+            Log.e(tag, content);
+        }
 	}
 
 	@Override
@@ -124,7 +126,9 @@ public class AndroidLogger implements IAndroidLogger {
 
 	@Override
 	public void fail(String tag, String content) {
-		Log.wtf(tag, content);
+        if (content != null) {
+            Log.wtf(tag, content);
+        }
 	}
 
 	@Override

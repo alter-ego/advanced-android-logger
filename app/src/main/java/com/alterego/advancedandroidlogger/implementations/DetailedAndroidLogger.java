@@ -17,10 +17,10 @@ package com.alterego.advancedandroidlogger.implementations;
  * 
  */
 
+import com.alterego.advancedandroidlogger.interfaces.IAndroidLogger;
+
 import java.util.ArrayList;
 import java.util.Arrays;
-
-import com.alterego.advancedandroidlogger.interfaces.IAndroidLogger;
 
 /**
  * This is the wrapper around {@link AndroidLogger} Android logger that adds additional class, method and line info 
@@ -42,8 +42,6 @@ public class DetailedAndroidLogger implements IAndroidLogger {
 	/**
 	 * Initializes the DetailedAndroidLogger with the default tag "LOGGER" and the 
 	 * default debugging level NORMAL (Log.i).
-	 *
-	 * @param tag Logging tag
 	 */
 	public DetailedAndroidLogger() {
 		this(null, LoggingLevel.NORMAL);
