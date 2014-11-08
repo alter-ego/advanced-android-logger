@@ -66,6 +66,30 @@ loggers).
 
 None.
 
+## USAGE
+
+Add this new repo to your `build.gradle` file:
+
+```groovy
+repositories {
+    mavenCentral()
+    maven { url "https://github.com/alter-ego/advanced-android-logger/raw/develop/releases/" }
+}
+```
+
+Add a new dependency:
+
+```groovy
+compile 'com.alterego:advancedandroidlogger:1.0.3@aar'
+```
+
+Create your logger:
+
+```java
+DetailedAndroidLogger logger = new DetailedAndroidLogger("YOUR_TAG", IAndroidLogger.LoggingLevel.VERBOSE);
+```
+
+
 ## LICENSE
 
 This library is licensed under [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.html).
