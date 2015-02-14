@@ -3,7 +3,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.14.+'
+        classpath 'com.android.tools.build:gradle:1.0.0'
     }
 }
 
@@ -15,16 +15,14 @@ android {
     buildToolsVersion "20.0.0"
 
     defaultConfig {
-        applicationId "com.alterego.advancedandroidlogger"
         minSdkVersion 8
         targetSdkVersion 21
         versionCode 4
-        versionName "1.0.3"
+        versionName "1.0.4"
     }
     buildTypes {
         release {
-            runProguard false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            minifyEnabled  false
         }
     }
 }
@@ -50,7 +48,7 @@ uploadArchives {
         pom.project {
             groupId 'com.alterego'
             artifactId 'advancedandroidlogger'
-            version "1.0.3"
+            version "1.0.4"
         }
     }
 }
