@@ -3,7 +3,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.0.0'
+        classpath 'com.android.tools.build:gradle:1.1.1'
     }
 }
 
@@ -12,7 +12,7 @@ apply plugin: 'maven'
 
 android {
     compileSdkVersion 22
-    buildToolsVersion "22.0.0"
+    buildToolsVersion "22.0.1"
 
     defaultConfig {
         minSdkVersion 8
@@ -20,9 +20,47 @@ android {
         versionCode 5
         versionName "1.0.5"
     }
+
     buildTypes {
         release {
-            minifyEnabled  false
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    productFlavors {
+        prod {
+            buildConfigField "String", "ENV", "\"PROD\""
+        }
+        dev {
+            buildConfigField "String", "ENV", "\"DEV\""
+        }
+    }
+
+    defaultPublishConfig "devDebug"
+    publishNonDefault true
+
+    sourceSets.main {
+        java.srcDirs = ['src/main/java',]
+    }
+
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+}
+
+if (android.productFlavors.size() > 0) {
+    android.libraryVariants.all { variant ->
+        // Publish a main artifact, otherwise the maven pom is not generated
+        if (android.publishNonDefault && variant.name == android.defaultPublishConfig) {
+            def bundleTask = tasks["bundle${name.capitalize()}"]
+            artifacts {
+                archives(bundleTask.archivePath) {
+                    classifier null
+                    builtBy bundleTask
+                }
+            }
         }
     }
 }
@@ -35,7 +73,7 @@ task makeJar(type: Copy) {
     from('build/intermediates/bundles/debug/')
     into('../releases/')
     include('classes.jar')
-    rename ('classes.jar', 'advancedandroidlogger.jar')
+    rename('classes.jar', 'advancedandroidlogger.jar')
 }
 
 makeJar.dependsOn(clearJar, build)
