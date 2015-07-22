@@ -20,6 +20,7 @@ import com.alterego.advancedandroidlogger.interfaces.IAndroidLogger;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * This is the wrapper around {@link AndroidLogger} Android logger that adds additional class, method and line info
@@ -133,7 +134,13 @@ public class DetailedAndroidLogger<T> implements IAndroidLogger<T> {
 
     @Override
     public void d(T message) {
-        mLogger.debug(getDetails(message.toString()));
+        if (message instanceof List) {
+            for (int i = 0; i < ((List) message).size() || i < 10; i++) {
+                mLogger.debug(String.valueOf(message));
+            }
+        } else {
+            mLogger.debug(getDetails(String.valueOf(message)));
+        }
     }
 
     @Override
