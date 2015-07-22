@@ -83,80 +83,59 @@ public class AndroidClassLogger implements IAndroidLogger {
 
 	@Override
 	public void verbose(String tag, String content) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void verbose(String content) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void debug(String tag, String content) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void debug(String content) {
-		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void d(Object message) {
 
 	}
 
 	@Override
 	public void info(String tag, String content) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void info(String content) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void warning(String tag, String content) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void warning(String content) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void error(String tag, String content) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void error(String content) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void fail(String tag, String content) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void fail(String content) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void setLoggingLevel(LoggingLevel level) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -178,10 +157,10 @@ public class AndroidClassLogger implements IAndroidLogger {
         }
 
         if (presetLevels != null)
-            retval.presetLevels = new HashMap<String, LoggingLevel>(presetLevels);
+            retval.presetLevels = new HashMap<>(presetLevels);
 
         if (presetPatterns != null)
-            retval.presetPatterns = new HashMap<Pattern, LoggingLevel>(presetPatterns);
+            retval.presetPatterns = new HashMap<>(presetPatterns);
 
         return retval;
 
