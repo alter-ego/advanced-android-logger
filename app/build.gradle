@@ -26,6 +26,10 @@ android {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+
+        debug {
+            minifyEnabled false
+        }
     }
 
     productFlavors {
@@ -38,7 +42,7 @@ android {
     }
 
     defaultPublishConfig "devDebug"
-    publishNonDefault true
+    publishNonDefault false
 
     sourceSets.main {
         java.srcDirs = ['src/main/java',]
