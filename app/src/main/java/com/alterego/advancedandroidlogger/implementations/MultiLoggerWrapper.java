@@ -20,7 +20,7 @@ import com.alterego.advancedandroidlogger.interfaces.IAndroidLogger;
 
 import java.util.ArrayList;
 
-public class MultiLoggerWrapper<T> implements IAndroidLogger<T> {
+public class MultiLoggerWrapper implements IAndroidLogger {
 
     private ArrayList<IAndroidLogger> mLoggers;
 
@@ -65,7 +65,7 @@ public class MultiLoggerWrapper<T> implements IAndroidLogger<T> {
     }
 
     @Override
-    public void d(T message) {
+    public void d(Object message) {
         debug(String.valueOf(message));
     }
 

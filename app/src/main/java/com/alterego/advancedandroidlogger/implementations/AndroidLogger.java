@@ -21,13 +21,13 @@ import com.alterego.advancedandroidlogger.interfaces.IAndroidLogger;
 import android.util.Log;
 
 /**
- * This is the wrapper around the basic Android {@link Log} logger. It has logging methods in two flavours, with tag and without 
+ * This is the wrapper around the basic Android {@link Log} logger. It has logging methods in two flavours, with tag and without
  * (default tag is "ADVANCEDANDROIDLOGGER") - the tag may also be set via constructor, but can also be overridden.
  * {@link setLoggingLevel()} method sets the logging level, below which log calls will not
  * be logged (e.g. if you set logging level to NORMAL, all the ILogger calls to verbose and debug methods will
  * not result in printed logs); default logging level is NORMAL i.e. INFO.
  */
-public class AndroidLogger<T> implements IAndroidLogger<T> {
+public class AndroidLogger implements IAndroidLogger {
 
     private int mLoggingLevel = 2;
 
@@ -93,7 +93,7 @@ public class AndroidLogger<T> implements IAndroidLogger<T> {
     }
 
     @Override
-    public void d(T message) {
+    public void d(Object message) {
         debug(String.valueOf(message));
     }
 

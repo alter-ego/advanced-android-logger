@@ -21,16 +21,16 @@ import com.alterego.advancedandroidlogger.interfaces.IAndroidLogger;
 import android.os.Debug;
 
 /**
- * This is the wrapper around the {@link IAndroidLogger} interface - you can pass it {@link AndroidLogger} or {@link DetailedAndroidLogger}. 
+ * This is the wrapper around the {@link IAndroidLogger} interface - you can pass it {@link AndroidLogger} or {@link DetailedAndroidLogger}.
  * It adds memory info in configurable units. It is in the following format:
  * Current memory stats RAM used = (totalMemory - freeMemory)/maxMemory; HEAP used = heapAllocatedMemory FOR ... (regular logging text)
-
- * 	totalMemory = Runtime.getRuntime().totalMemory()
- freeMemory = Runtime.getRuntime().freeMemory()
- maxMemory = Runtime.getRuntime().maxMemory()
- heapAllocatedMemory = Debug.getNativeHeapAllocatedSize()
+ *
+ * totalMemory = Runtime.getRuntime().totalMemory()
+ * freeMemory = Runtime.getRuntime().freeMemory()
+ * maxMemory = Runtime.getRuntime().maxMemory()
+ * heapAllocatedMemory = Debug.getNativeHeapAllocatedSize()
  */
-public class MemoryUsageAndroidLogger<T> implements IAndroidLogger<T> {
+public class MemoryUsageAndroidLogger implements IAndroidLogger {
 
     public static enum MemoryUnit {
         Bytes, Kilobytes, Megabytes
@@ -45,7 +45,7 @@ public class MemoryUsageAndroidLogger<T> implements IAndroidLogger<T> {
      * Initializes the MemoryUsageLogger with the {@link IAndroidLogger} base and a {@link MemoryUnit} which takes following values:
      *
      * @param logger {@link IAndroidLogger} reference
-     * @param unit {@link MemoryUnit} takes following values = Bytes, Kilobytes, Megabytes
+     * @param unit   {@link MemoryUnit} takes following values = Bytes, Kilobytes, Megabytes
      */
     public MemoryUsageAndroidLogger(IAndroidLogger logger, MemoryUnit unit) {
         mLogger = logger;
@@ -135,7 +135,7 @@ public class MemoryUsageAndroidLogger<T> implements IAndroidLogger<T> {
     }
 
     @Override
-    public void d(T message) {
+    public void d(Object message) {
         debug(String.valueOf(message));
     }
 

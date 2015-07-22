@@ -28,7 +28,7 @@ import java.util.List;
  * className.methodName() @ line lineNr ": " + normal logger content;
  */
 
-public class DetailedAndroidLogger<T> implements IAndroidLogger<T> {
+public class DetailedAndroidLogger implements IAndroidLogger {
 
     private IAndroidLogger mLogger;
 
@@ -133,7 +133,7 @@ public class DetailedAndroidLogger<T> implements IAndroidLogger<T> {
     }
 
     @Override
-    public void d(T message) {
+    public void d(Object message) {
         if (message instanceof List) {
             for (int i = 0; i < ((List) message).size() || i < 10; i++) {
                 mLogger.debug(String.valueOf(message));

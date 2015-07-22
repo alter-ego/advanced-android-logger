@@ -22,7 +22,7 @@ import com.alterego.advancedandroidlogger.interfaces.IAndroidLogger;
  * NullAndroidLogger should be used when declaring ILogger in the app (to avoid NullPointerExceptions when
  * calling uninstantiated ILogger (i.e. calling ILogger before we have a contest for instantiating)
  */
-public class NullAndroidLogger<T> implements IAndroidLogger<T> {
+public class NullAndroidLogger implements IAndroidLogger {
 
     public static final IAndroidLogger instance = new NullAndroidLogger();
 
@@ -46,7 +46,7 @@ public class NullAndroidLogger<T> implements IAndroidLogger<T> {
     }
 
     @Override
-    public void d(T message) {
+    public void d(Object message) {
     }
 
     @Override

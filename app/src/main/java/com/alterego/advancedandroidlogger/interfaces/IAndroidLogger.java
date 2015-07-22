@@ -26,7 +26,7 @@ import android.util.Log;
  * not result in printed logs). Finally, there's the {@link getLogger} that will come in handy when setting log
  * levels and loggers for classes/methods.
  */
-public interface IAndroidLogger<T> {
+public interface IAndroidLogger {
 
     /**
      * There are four logging levels = VERBOSE (Log.v), DEBUG (Log.d), NORMAL (Log.i) and WARNING (Log.w, Log.e and Log.wtf).
@@ -44,7 +44,7 @@ public interface IAndroidLogger<T> {
 
     void debug(String content);
 
-    void d(T message);
+    void d(Object message);
 
     void info(String tag, String content);
 
