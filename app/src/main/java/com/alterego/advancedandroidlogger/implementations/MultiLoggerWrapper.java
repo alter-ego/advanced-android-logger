@@ -111,6 +111,31 @@ public class MultiLoggerWrapper implements IAndroidLogger {
         }
     }
 
+    /**
+     * Print an error message. The red ones on logcat
+     *
+     * @param e {@link String} or {@link Throwable}
+     *
+     *          If {@link Throwable} has a message, it will be printed. Otherwise, the whole object will be printed with {@code toString()}.
+     */
+
+    @Override
+    public void e(Object e) {
+        for (IAndroidLogger logger : mLoggers) {
+            if (e != null && e instanceof String) {
+                logger.error((String) e);
+            }
+
+            if (e != null && ((e instanceof Throwable))) {
+                if (((Throwable) e).getMessage().length() > 0) {
+                    logger.error(((Throwable) e).getMessage());
+                } else {
+                    logger.error(e.toString());
+                }
+            }
+        }
+    }
+
     @Override
     public void fail(String tag, String content) {
         for (IAndroidLogger logger : mLoggers) {

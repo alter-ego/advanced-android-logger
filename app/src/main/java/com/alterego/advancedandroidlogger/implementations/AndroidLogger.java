@@ -134,6 +134,21 @@ public class AndroidLogger implements IAndroidLogger {
     }
 
     @Override
+    public void e(Object e) {
+        if (e != null && e instanceof String) {
+            error(mLoggingTag, (String) e);
+        }
+
+        if (e != null && ((e instanceof Throwable))) {
+            if (((Throwable) e).getMessage().length() > 0) {
+                error(mLoggingTag, ((Throwable) e).getMessage());
+            } else {
+                error(mLoggingTag, e.toString());
+            }
+        }
+    }
+
+    @Override
     public void fail(String tag, String content) {
         if (content != null) {
             Log.wtf(tag, content);

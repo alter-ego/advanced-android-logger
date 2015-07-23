@@ -169,6 +169,29 @@ public class MemoryUsageAndroidLogger implements IAndroidLogger {
         mLogger.error(getDetails(content));
     }
 
+    /**
+     * Print an error message. The red ones on logcat
+     *
+     * @param e {@link String} or {@link Throwable}
+     *
+     *          If {@link Throwable} has a message, it will be printed. Otherwise, the whole object will be printed with {@code toString()}.
+     */
+
+    @Override
+    public void e(Object e) {
+        if (e != null && e instanceof String) {
+            error((String) e);
+        }
+
+        if (e != null && ((e instanceof Throwable))) {
+            if (((Throwable) e).getMessage().length() > 0) {
+                error(((Throwable) e).getMessage());
+            } else {
+                error(e.toString());
+            }
+        }
+    }
+
     @Override
     public void fail(String tag, String content) {
         mLogger.fail(tag, getDetails(content));

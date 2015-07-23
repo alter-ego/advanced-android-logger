@@ -58,6 +58,8 @@ public interface IAndroidLogger {
 
     void error(String content);
 
+    void e(Object e);
+
     void fail(String tag, String content);
 
     void fail(String content);
