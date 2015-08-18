@@ -83,9 +83,7 @@ public class DetailedAndroidLogger implements IAndroidLogger {
                 break;
             }
         }
-
         return level_index;
-
     }
 
 
@@ -93,23 +91,22 @@ public class DetailedAndroidLogger implements IAndroidLogger {
         String details = "";
 
         try {
+            if (mStackTraceLevel < Thread.currentThread().getStackTrace().length) {
+                if (COMMON_STACKTRACE_CLASSNAMES.contains(Thread.currentThread().getStackTrace()[mStackTraceLevel].getClassName())) {
+                    mStackTraceLevel = findStackTraceLevel();
+                }
 
-            if (COMMON_STACKTRACE_CLASSNAMES.contains(Thread.currentThread().getStackTrace()[mStackTraceLevel].getClassName())) {
-                mStackTraceLevel = findStackTraceLevel();
+                String fullClassName = Thread.currentThread().getStackTrace()[mStackTraceLevel].getClassName();
+                String className = fullClassName.substring(fullClassName.lastIndexOf(".") + 1);
+                String methodName = Thread.currentThread().getStackTrace()[mStackTraceLevel].getMethodName();
+                int lineNumber = Thread.currentThread().getStackTrace()[mStackTraceLevel].getLineNumber();
+                details = className + "." + methodName + "() @ line " + lineNumber + ": " + content;
             }
-
-            String fullClassName = Thread.currentThread().getStackTrace()[mStackTraceLevel].getClassName();
-            String className = fullClassName.substring(fullClassName.lastIndexOf(".") + 1);
-            String methodName = Thread.currentThread().getStackTrace()[mStackTraceLevel].getMethodName();
-            int lineNumber = Thread.currentThread().getStackTrace()[mStackTraceLevel].getLineNumber();
-            details = className + "." + methodName + "() @ line " + lineNumber + ": " + content;
         } catch (Exception e) {
             mLogger.warning("LOGGER", "DetailedAndroidLogger.getDetails() couldn't get details because of " + e.getMessage());
             e.printStackTrace();
         }
-
         return details;
-
     }
 
     @Override
@@ -178,7 +175,7 @@ public class DetailedAndroidLogger implements IAndroidLogger {
      *
      * @param e {@link String} or {@link Throwable}
      *
-     * If {@link Throwable} has a message, it will be printed. Otherwise, the whole object will be printed with {@code toString()}.
+     *          If {@link Throwable} has a message, it will be printed. Otherwise, the whole object will be printed with {@code toString()}.
      */
 
     @Override
