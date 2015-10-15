@@ -42,7 +42,7 @@ android {
     }
 
     defaultPublishConfig "devDebug"
-    publishNonDefault false
+    publishNonDefault true
 
     sourceSets.main {
         java.srcDirs = ['src/main/java',]
@@ -59,6 +59,7 @@ dependencies {
     compile "com.android.support:support-annotations:23.0.1"
 }
 
+// Jitpack setup
 if (android.productFlavors.size() > 0) {
     android.libraryVariants.all { variant ->
         // Publish a main artifact, otherwise the maven pom is not generated
@@ -94,7 +95,7 @@ uploadArchives {
         pom.project {
             groupId 'com.alterego'
             artifactId 'advancedandroidlogger'
-            version "1.0.5"
+            version "1.0.6"
         }
     }
 }
