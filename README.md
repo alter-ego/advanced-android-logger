@@ -80,7 +80,7 @@ repositories {
 Add a new dependency:
 
 ```groovy
-compile 'com.alterego:advancedandroidlogger:1.0.3@aar'
+compile 'com.alterego:advancedandroidlogger:1.0.6@aar'
 ```
 
 Create your logger:
