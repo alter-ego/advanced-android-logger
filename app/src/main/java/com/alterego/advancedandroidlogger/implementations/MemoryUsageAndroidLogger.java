@@ -193,6 +193,11 @@ public class MemoryUsageAndroidLogger implements IAndroidLogger {
     }
 
     @Override
+    public void e(String message, Throwable throwable) {
+        mLogger.error(getDetails(message + " => " + throwable.getMessage()));
+    }
+
+    @Override
     public void fail(String tag, String content) {
         mLogger.fail(tag, getDetails(content));
     }

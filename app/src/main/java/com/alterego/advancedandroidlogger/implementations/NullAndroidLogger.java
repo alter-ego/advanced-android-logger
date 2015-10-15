@@ -79,6 +79,11 @@ public class NullAndroidLogger implements IAndroidLogger {
     }
 
     @Override
+    public void e(String message, Throwable throwable) {
+
+    }
+
+    @Override
     public void fail(String tag, String content) {
     }
 

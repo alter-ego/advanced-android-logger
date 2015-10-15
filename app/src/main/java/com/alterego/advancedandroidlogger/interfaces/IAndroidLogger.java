@@ -60,6 +60,8 @@ public interface IAndroidLogger {
 
     void e(Object e);
 
+    void e(String message, Throwable throwable);
+
     void fail(String tag, String content);
 
     void fail(String content);

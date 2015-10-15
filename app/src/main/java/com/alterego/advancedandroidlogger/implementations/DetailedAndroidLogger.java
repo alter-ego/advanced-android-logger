@@ -194,6 +194,11 @@ public class DetailedAndroidLogger implements IAndroidLogger {
     }
 
     @Override
+    public void e(String message, Throwable throwable) {
+
+    }
+
+    @Override
     public void fail(String tag, String content) {
         mLogger.fail(tag, getDetails(content));
     }

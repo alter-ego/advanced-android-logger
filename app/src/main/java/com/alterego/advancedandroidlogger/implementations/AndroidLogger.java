@@ -18,6 +18,7 @@ package com.alterego.advancedandroidlogger.implementations;
 
 import com.alterego.advancedandroidlogger.interfaces.IAndroidLogger;
 
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 /**
@@ -146,6 +147,11 @@ public class AndroidLogger implements IAndroidLogger {
                 error(mLoggingTag, e.toString());
             }
         }
+    }
+
+    @Override
+    public void e(String message, @NonNull Throwable throwable) {
+        error(mLoggingTag, message + " => " + throwable.getMessage());
     }
 
     @Override
