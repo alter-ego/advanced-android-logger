@@ -1,14 +1,5 @@
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:1.3.0'
-    }
-}
-
 apply plugin: 'com.android.library'
-apply plugin: 'maven'
+apply plugin: 'com.github.dcendents.android-maven'
 
 android {
     compileSdkVersion 23
@@ -54,43 +45,30 @@ android {
     }
 }
 
-// Jitpack setup
-if (android.productFlavors.size() > 0) {
-    android.libraryVariants.all { variant ->
-        // Publish a main artifact, otherwise the maven pom is not generated
-        if (android.publishNonDefault && variant.name == android.defaultPublishConfig) {
-            def bundleTask = tasks["bundle${name.capitalize()}"]
-            artifacts {
-                archives(bundleTask.archivePath) {
-                    classifier null
-                    builtBy bundleTask
-                }
-            }
-        }
-    }
+
+dependencies {
+    // add dependencies here
 }
 
-task clearJar(type: Delete) {
-    delete 'build/outputs/advancedandroidlogger.jar'
+// build a jar with source files
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
 }
 
-task makeJar(type: Copy) {
-    from('build/intermediates/bundles/debug/')
-    into('../releases/')
-    include('classes.jar')
-    rename('classes.jar', 'advancedandroidlogger.jar')
+task javadoc(type: Javadoc) {
+    failOnError  false
+    source = android.sourceSets.main.java.sourceFiles
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
 }
 
-makeJar.dependsOn(clearJar, build)
+// build a jar with javadoc
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
 
-uploadArchives {
-    repositories.mavenDeployer {
-        def deployPath = file(getProperty('aar.deployPath'))
-        repository(url: "file://${deployPath.absolutePath}")
-        pom.project {
-            groupId 'com.alterego'
-            artifactId 'advancedandroidlogger'
-            version "1.0.7"
-        }
-    }
+artifacts {
+    archives sourcesJar
+    archives javadocJar
 }
