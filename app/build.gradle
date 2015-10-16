@@ -42,7 +42,7 @@ android {
     }
 
     defaultPublishConfig "devDebug"
-    publishNonDefault true
+    publishNonDefault false
 
     sourceSets.main {
         java.srcDirs = ['src/main/java',]
