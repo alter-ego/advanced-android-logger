@@ -3,13 +3,14 @@
   <groupId>com.alterego</groupId>
   <artifactId>advancedandroidlogger</artifactId>
   <versioning>
-    <release>1.0.6</release>
+    <release>1.0.7</release>
     <versions>
       <version>1.0.3</version>
       <version>1.0.4</version>
       <version>1.0.5</version>
       <version>1.0.6</version>
+      <version>1.0.7</version>
     </versions>
-    <lastUpdated>20151015155542</lastUpdated>
+    <lastUpdated>20151016103026</lastUpdated>
   </versioning>
 </metadata>
