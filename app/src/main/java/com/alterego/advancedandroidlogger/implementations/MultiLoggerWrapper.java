@@ -18,8 +18,6 @@ package com.alterego.advancedandroidlogger.implementations;
 
 import com.alterego.advancedandroidlogger.interfaces.IAndroidLogger;
 
-import android.support.annotation.NonNull;
-
 import java.util.ArrayList;
 
 public class MultiLoggerWrapper implements IAndroidLogger {
@@ -139,7 +137,7 @@ public class MultiLoggerWrapper implements IAndroidLogger {
     }
 
     @Override
-    public void e(String message, @NonNull Throwable throwable) {
+    public void e(String message, Throwable throwable) {
         for (IAndroidLogger logger : mLoggers) {
             logger.error(message + " => " + throwable.getMessage());
         }
