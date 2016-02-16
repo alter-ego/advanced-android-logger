@@ -72,6 +72,24 @@ public class DetailedAndroidLogger implements IAndroidLogger {
         mStackTraceLevel = findStackTraceLevel();
     }
 
+    /**
+     * Initializes the DetailedAndroidLogger with a specified tag and a specified logging
+     * level.
+     *
+     * @param tag   Logging tag
+     * @param level Logging level {@link IAndroidLogger}
+     * @param useStandardOutput Should the logger use standard System output or android Log output
+     */
+
+    public DetailedAndroidLogger(String tag, LoggingLevel level, boolean useStandardOutput) {
+        if (useStandardOutput) {
+            mLogger = new StandardOutputLogger(tag, level);
+        } else {
+            mLogger = new AndroidLogger(tag, level);
+        }
+        mStackTraceLevel = findStackTraceLevel();
+    }
+
     private int findStackTraceLevel() {
 
         int level_index = 0;
