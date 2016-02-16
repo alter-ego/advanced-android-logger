@@ -17,8 +17,8 @@ android {
     defaultConfig {
         minSdkVersion 8
         targetSdkVersion 23
-        versionCode 6
-        versionName "1.0.7"
+        versionCode 7
+        versionName "1.0.8"
     }
 
     buildTypes {
@@ -90,7 +90,7 @@ uploadArchives {
         pom.project {
             groupId 'com.alterego'
             artifactId 'advancedandroidlogger'
-            version "1.0.7"
+            version "1.0.8"
         }
     }
 }
