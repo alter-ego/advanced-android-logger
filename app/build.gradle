@@ -41,7 +41,7 @@ android {
         }
     }
 
-    defaultPublishConfig "devDebug"
+    defaultPublishConfig "prodRelease"
     publishNonDefault false
 
     sourceSets.main {
