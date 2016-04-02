@@ -1,14 +1,28 @@
+def siteUrl = 'https://github.com/alter-ego/advanced-android-logger'
+def gitUrl = 'https://github.com/alter-ego/advanced-android-logger.git'
+def artifactGroup = "solutions.alterego"
+def artifactName = "advancedandroidlogger"
+def artifactVersion = "1.0.8"
+def artifactDesc = "This library is meant to offer a wrapper around the standard Android Log.x methods in few distinct flavours."
+
 buildscript {
     repositories {
         mavenCentral()
+        jcenter()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:1.5.0'
+        classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:1.6"
     }
 }
 
 apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+apply plugin: 'maven-publish'
 
 android {
     compileSdkVersion 23
@@ -18,7 +32,7 @@ android {
         minSdkVersion 8
         targetSdkVersion 23
         versionCode 7
-        versionName "1.0.8"
+        versionName artifactVersion
     }
 
     buildTypes {
@@ -26,26 +40,6 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
-
-        debug {
-            minifyEnabled false
-        }
-    }
-
-    productFlavors {
-        prod {
-            buildConfigField "String", "ENV", "\"PROD\""
-        }
-        dev {
-            buildConfigField "String", "ENV", "\"DEV\""
-        }
-    }
-
-    defaultPublishConfig "prodRelease"
-    publishNonDefault false
-
-    sourceSets.main {
-        java.srcDirs = ['src/main/java',]
     }
 
     lintOptions {
@@ -54,9 +48,45 @@ android {
     }
 }
 
+install {
+    repositories.mavenInstaller {
+        pom {
+            project {
+                packaging 'aar'
+
+                name artifactDesc
+                url siteUrl
+
+                licenses {
+                    license {
+                        name 'The Apache Software License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id 'mrsasha'
+                        name 'Sasa Sekulic'
+                        email 'me@sasasekulic.info'
+                    }
+                    developer {
+                        id 'hamen'
+                        name 'Ivan Morgillo'
+                        email 'imorgillo@gmail.com'
+                    }
+                }
+                scm {
+                    connection gitUrl
+                    developerConnection gitUrl
+                    url siteUrl
+
+                }
+            }
+        }
+    }
+}
 
 dependencies {
-    // add dependencies here
 }
 
 // build a jar with source files
@@ -87,9 +117,53 @@ uploadArchives {
         def deployPath = file(getProperty('aar.deployPath'))
         repository(url: "file://${deployPath.absolutePath}")
         pom.project {
-            groupId 'com.alterego'
-            artifactId 'advancedandroidlogger'
-            version "1.0.8"
+            groupId artifactGroup
+            artifactId artifactName
+            version artifactVersion
         }
     }
+}
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+bintray {
+    user = properties.getProperty("bintray.user")
+    key = properties.getProperty("bintray.apikey")
+    dryRun = false
+
+    publications = ['Publication']
+    pkg {
+        repo = "android"
+        name = artifactName
+        userOrg = 'alterego-solutions'
+        websiteUrl = siteUrl
+        vcsUrl = gitUrl
+        licenses = ["Apache-2.0"]
+        publish = true
+        issueTrackerUrl = 'https://github.com/alter-ego/advanced-android-logger/issues'
+
+        version {
+            name = artifactVersion
+            desc = artifactDesc
+            released = new Date()
+            vcsTag = artifactVersion
+        }
+    }
+}
+
+publishing {
+    publications {
+        Publication(MavenPublication) {
+            artifact sourcesJar
+            artifact javadocJar
+            groupId artifactGroup
+            artifactId artifactName
+            version artifactVersion
+        }
+    }
+}
+
+task findConventions << {
+    println project.getConvention()
 }
