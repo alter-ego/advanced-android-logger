@@ -1,11 +1,11 @@
 package com.alterego.advancedandroidlogger.implementations;
 
+import com.alterego.advancedandroidlogger.helpers.Pattern;
+import com.alterego.advancedandroidlogger.interfaces.IAndroidLogger;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-
-import com.alterego.advancedandroidlogger.helpers.Pattern;
-import com.alterego.advancedandroidlogger.interfaces.IAndroidLogger;
 
 public class AndroidClassLogger implements IAndroidLogger {
 	private IAndroidLogger mLogger;
@@ -16,8 +16,6 @@ public class AndroidClassLogger implements IAndroidLogger {
 	/**
 	 * Initializes the AndroidClassLogger with the default tag "LOGGER" and the 
 	 * default debugging level NORMAL (Log.i).
-	 *
-	 * @param tag Logging tag
 	 */
 	public AndroidClassLogger() {
 		this(null, LoggingLevel.NORMAL, false);
