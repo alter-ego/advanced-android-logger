@@ -155,6 +155,7 @@ bintray {
 publishing {
     publications {
         Publication(MavenPublication) {
+            artifact("$buildDir/outputs/aar/app-release.aar")
             artifact sourcesJar
             artifact javadocJar
             groupId artifactGroup
