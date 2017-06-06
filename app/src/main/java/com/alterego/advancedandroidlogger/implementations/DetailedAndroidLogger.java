@@ -43,7 +43,10 @@ public class DetailedAndroidLogger implements IAndroidLogger {
     /**
      * Initializes the DetailedAndroidLogger with the default tag "LOGGER" and the
      * default debugging level NORMAL (Log.i).
+     *
+     * @deprecated use {@link DetailedAndroidLoggerBuilder}
      */
+    @Deprecated
     public DetailedAndroidLogger() {
         this(null, LoggingLevel.NORMAL);
     }
@@ -53,8 +56,9 @@ public class DetailedAndroidLogger implements IAndroidLogger {
      * default debugging level NORMAL (Log.i).
      *
      * @param tag Logging tag
+     * @deprecated use {@link DetailedAndroidLoggerBuilder}
      */
-
+    @Deprecated
     public DetailedAndroidLogger(String tag) {
         this(tag, LoggingLevel.NORMAL);
     }
@@ -65,8 +69,10 @@ public class DetailedAndroidLogger implements IAndroidLogger {
      *
      * @param tag   Logging tag
      * @param level Logging level {@link IAndroidLogger}
+     * @deprecated use {@link DetailedAndroidLoggerBuilder}
      */
 
+    @Deprecated
     public DetailedAndroidLogger(String tag, LoggingLevel level) {
         mLogger = new AndroidLogger(tag, level);
         mStackTraceLevel = findStackTraceLevel();
@@ -76,11 +82,13 @@ public class DetailedAndroidLogger implements IAndroidLogger {
      * Initializes the DetailedAndroidLogger with a specified tag and a specified logging
      * level.
      *
-     * @param tag   Logging tag
-     * @param level Logging level {@link IAndroidLogger}
+     * @param tag               Logging tag
+     * @param level             Logging level {@link IAndroidLogger}
      * @param useStandardOutput Should the logger use standard System output or android Log output
+     * @deprecated use {@link DetailedAndroidLoggerBuilder}
      */
 
+    @Deprecated
     public DetailedAndroidLogger(String tag, LoggingLevel level, boolean useStandardOutput) {
         if (useStandardOutput) {
             mLogger = new StandardOutputLogger(tag, level);
@@ -90,10 +98,32 @@ public class DetailedAndroidLogger implements IAndroidLogger {
         mStackTraceLevel = findStackTraceLevel();
     }
 
-    private int findStackTraceLevel() {
+    /**
+     * Initializes the DetailedAndroidLogger with a specified tag, logging level, stack trace level and standard output switch.
+     *
+     * @param tag               Logging tag
+     * @param level             Logging level {@link IAndroidLogger}
+     * @param useStandardOutput Should the logger use standard System output or android Log output
+     * @param stackTraceLevel   Stack trace level for printing (-1 for auto-finding, might not always work)
+     */
 
-        int level_index = 0;
-        String fullClassName = "";
+    public DetailedAndroidLogger(String tag, LoggingLevel level, boolean useStandardOutput, int stackTraceLevel) {
+        if (useStandardOutput) {
+            mLogger = new StandardOutputLogger(tag, level);
+        } else {
+            mLogger = new AndroidLogger(tag, level);
+        }
+
+        if (stackTraceLevel == -1) {
+            mStackTraceLevel = findStackTraceLevel();
+        } else {
+            mStackTraceLevel = stackTraceLevel;
+        }
+    }
+
+    private int findStackTraceLevel() {
+        int level_index;
+        String fullClassName;
 
         for (level_index = 0; level_index < Thread.currentThread().getStackTrace().length; level_index++) {
             fullClassName = Thread.currentThread().getStackTrace()[level_index].getClassName();
@@ -250,6 +280,46 @@ public class DetailedAndroidLogger implements IAndroidLogger {
     @Override
     public int getLoggingLevel() {
         return mLogger.getLoggingLevel();
+    }
+
+    public static class DetailedAndroidLoggerBuilder {
+
+        private String tag = null;
+
+        private LoggingLevel level = LoggingLevel.NORMAL;
+
+        private int stackTraceLevel = 0;
+
+        private boolean useStandard = false;
+
+        public static DetailedAndroidLoggerBuilder get() {
+            return new DetailedAndroidLoggerBuilder();
+        }
+
+        public DetailedAndroidLoggerBuilder withTag(String tag) {
+            this.tag = tag;
+            return this;
+        }
+
+        public DetailedAndroidLoggerBuilder withLoggingLevel(LoggingLevel level) {
+            this.level = level;
+            return this;
+        }
+
+        public DetailedAndroidLoggerBuilder withStacktraceLevel(int level) {
+            this.stackTraceLevel = level;
+            return this;
+        }
+
+        public DetailedAndroidLoggerBuilder withUsingStandardOutput(boolean useStandard) {
+            this.useStandard = useStandard;
+            return this;
+        }
+
+        public DetailedAndroidLogger build() {
+            return new DetailedAndroidLogger(tag, level, useStandard, stackTraceLevel);
+        }
+
     }
 
 }

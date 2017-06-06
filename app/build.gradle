@@ -2,36 +2,34 @@ def siteUrl = 'https://github.com/alter-ego/advanced-android-logger'
 def gitUrl = 'https://github.com/alter-ego/advanced-android-logger.git'
 def artifactGroup = "solutions.alterego"
 def artifactName = "advancedandroidlogger"
-def artifactVersion = "1.0.8"
+def artifactVersion = "1.0.9"
 def artifactDesc = "This library is meant to offer a wrapper around the standard Android Log.x methods in few distinct flavours."
+def artifactVersionCode = 8
 
 buildscript {
     repositories {
         mavenCentral()
         jcenter()
-        maven {
-            url "https://plugins.gradle.org/m2/"
-        }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.5.0'
+        classpath 'com.android.tools.build:gradle:2.3.1'
         classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:1.6"
     }
 }
 
 apply plugin: 'com.android.library'
-apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'maven'
 apply plugin: 'com.jfrog.bintray'
 apply plugin: 'maven-publish'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
 
     defaultConfig {
         minSdkVersion 8
-        targetSdkVersion 23
-        versionCode 7
+        targetSdkVersion 25
+        versionCode artifactVersionCode
         versionName artifactVersion
     }
 
@@ -45,44 +43,6 @@ android {
     lintOptions {
         checkReleaseBuilds false
         abortOnError false
-    }
-}
-
-install {
-    repositories.mavenInstaller {
-        pom {
-            project {
-                packaging 'aar'
-
-                name artifactDesc
-                url siteUrl
-
-                licenses {
-                    license {
-                        name 'The Apache Software License, Version 2.0'
-                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                    }
-                }
-                developers {
-                    developer {
-                        id 'mrsasha'
-                        name 'Sasa Sekulic'
-                        email 'me@sasasekulic.info'
-                    }
-                    developer {
-                        id 'hamen'
-                        name 'Ivan Morgillo'
-                        email 'imorgillo@gmail.com'
-                    }
-                }
-                scm {
-                    connection gitUrl
-                    developerConnection gitUrl
-                    url siteUrl
-
-                }
-            }
-        }
     }
 }
 
@@ -163,8 +123,4 @@ publishing {
             version artifactVersion
         }
     }
-}
-
-task findConventions << {
-    println project.getConvention()
 }
